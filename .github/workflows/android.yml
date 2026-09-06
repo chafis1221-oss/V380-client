@@ -52,6 +52,13 @@ jobs:
           name: v380-client-release-unsigned
           path: app/app/build/outputs/apk/release/*.apk
 
+      - name: Prepare release APKs
+        run: |
+          mkdir -p release-assets
+          cp app/app/build/outputs/apk/debug/*.apk release-assets/v380-client-debug.apk
+          cp app/app/build/outputs/apk/release/*.apk release-assets/v380-client-release-unsigned.apk
+          ls -lh release-assets
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -60,5 +67,5 @@ jobs:
           generate_release_notes: true
           prerelease: true
           files: |
-            app/app/build/outputs/apk/debug/*.apk
-            app/app/build/outputs/apk/release/*.apk
+            release-assets/v380-client-debug.apk
+            release-assets/v380-client-release-unsigned.apk
