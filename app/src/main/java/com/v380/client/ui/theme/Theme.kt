@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 
 private val DarkScheme = darkColorScheme(
     primary = V380Colors.accent,
-    onPrimary = V380Colors.text,
+    onPrimary = V380Colors.bg,
     secondary = V380Colors.surface,
     tertiary = V380Colors.surfaceAlt,
     background = V380Colors.bg,

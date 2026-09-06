@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -38,34 +39,53 @@ fun AddServerDialog(
 
         Text("Server Name", color = V380Colors.textMuted, fontSize = 11.sp)
         Spacer(Modifier.height(4.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .background(V380Colors.surfaceAlt, RoundedCornerShape(4.dp))
-                .border(1.dp, V380Colors.border, RoundedCornerShape(4.dp))
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = V380Colors.surfaceAlt,
+                unfocusedContainerColor = V380Colors.surfaceAlt,
+                focusedBorderColor = V380Colors.text,
+                unfocusedBorderColor = V380Colors.border,
+                focusedTextColor = V380Colors.text,
+                unfocusedTextColor = V380Colors.text,
+            ),
         )
         Spacer(Modifier.height(12.dp))
 
         Text("IP Address", color = V380Colors.textMuted, fontSize = 11.sp)
         Spacer(Modifier.height(4.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .background(V380Colors.surfaceAlt, RoundedCornerShape(4.dp))
-                .border(1.dp, V380Colors.border, RoundedCornerShape(4.dp))
+        OutlinedTextField(
+            value = ip,
+            onValueChange = { ip = it },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = V380Colors.surfaceAlt,
+                unfocusedContainerColor = V380Colors.surfaceAlt,
+                focusedBorderColor = V380Colors.text,
+                unfocusedBorderColor = V380Colors.border,
+                focusedTextColor = V380Colors.text,
+                unfocusedTextColor = V380Colors.text,
+            ),
         )
-        Spacer(Modifier.height(12.dp))
-
         Text("Port", color = V380Colors.textMuted, fontSize = 11.sp)
         Spacer(Modifier.height(4.dp))
-        Box(
-            modifier = Modifier
-                .width(120.dp)
-                .height(40.dp)
-                .background(V380Colors.surfaceAlt, RoundedCornerShape(4.dp))
-                .border(1.dp, V380Colors.border, RoundedCornerShape(4.dp))
+        OutlinedTextField(
+            value = port,
+            onValueChange = { port = it.filter(Char::isDigit).take(5) },
+            singleLine = true,
+            modifier = Modifier.width(120.dp).height(52.dp),
+            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = V380Colors.surfaceAlt,
+                unfocusedContainerColor = V380Colors.surfaceAlt,
+                focusedBorderColor = V380Colors.text,
+                unfocusedBorderColor = V380Colors.border,
+                focusedTextColor = V380Colors.text,
+                unfocusedTextColor = V380Colors.text,
+            ),
         )
         Spacer(Modifier.height(20.dp))
 
@@ -83,7 +103,7 @@ fun AddServerDialog(
             Spacer(Modifier.width(8.dp))
             Box(
                 modifier = Modifier
-                    .background(V380Colors.accent, RoundedCornerShape(4.dp))
+                    .background(V380Colors.text, RoundedCornerShape(4.dp))
                     .clickable {
                         if (name.isNotBlank() && ip.isNotBlank()) {
                             scope.launch {
@@ -94,7 +114,7 @@ fun AddServerDialog(
                     }
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
-                Text("Connect", color = V380Colors.text, fontSize = 13.sp)
+                Text("Connect", color = V380Colors.bg, fontSize = 13.sp)
             }
         }
     }

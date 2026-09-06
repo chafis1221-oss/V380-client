@@ -2,6 +2,7 @@ package com.v380.client.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -44,12 +45,10 @@ fun ServerListScreen(
             )
             Box(
                 modifier = Modifier
-                    .background(V380Colors.accent, RoundedCornerShape(4.dp))
-                    .border(1.dp, V380Colors.accent, RoundedCornerShape(4.dp))
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-                    .let { mod ->
-                        mod
-                    },
+                    .background(V380Colors.surfaceAlt, RoundedCornerShape(4.dp))
+                    .border(1.dp, V380Colors.borderLight, RoundedCornerShape(4.dp))
+                    .clickable(onClick = onAddClick)
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
