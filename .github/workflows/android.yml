@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, master ]
     paths:
-      - 'app/android/**'
+      - 'app/**'
       - '.github/workflows/android.yml'
   pull_request:
     branches: [ main, master ]
@@ -13,10 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app/android
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,25 +24,26 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.5'
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        working-directory: app
+        run: gradle assembleDebug
 
       - name: Build Release APK (unsigned)
-        run: ./gradlew assembleRelease
+        working-directory: app
+        run: gradle assembleRelease
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
           name: v380-client-debug
-          path: app/android/app/build/outputs/apk/debug/*.apk
+          path: app/app/build/outputs/apk/debug/*.apk
 
       - name: Upload Release APK (unsigned)
         uses: actions/upload-artifact@v4
         with:
           name: v380-client-release-unsigned
-          path: app/android/app/build/outputs/apk/release/*.apk
+          path: app/app/build/outputs/apk/release/*.apk
