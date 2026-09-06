@@ -10,8 +10,12 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,3 +51,14 @@ jobs:
         with:
           name: v380-client-release-unsigned
           path: app/app/build/outputs/apk/release/*.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-build-${{ github.run_number }}
+          name: V380 Client Android Build ${{ github.run_number }}
+          generate_release_notes: true
+          prerelease: true
+          files: |
+            app/app/build/outputs/apk/debug/*.apk
+            app/app/build/outputs/apk/release/*.apk
