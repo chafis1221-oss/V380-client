@@ -1,0 +1,11 @@
+# Add project specific ProGuard rules here.
+-keepclassmembers class com.v380.client.data.model.** { *; }
+-keepclassmembers class com.v380.client.domain.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
