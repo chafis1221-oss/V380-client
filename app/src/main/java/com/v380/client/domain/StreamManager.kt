@@ -22,13 +22,13 @@ class StreamManager(
 
     private val bufferSize = 1024 * 1024
     private val inputBuffers = Array(256) { ByteArray(bufferSize) }
-    private val csdSps = byteArrayOf(
+    private val csdSps = intArrayOf(
         0x00, 0x00, 0x00, 0x01, 0x42, 0x01, 0x01, 0x01, 0x60, 0x00, 0x00, 0x03, 0x00, 0x90, 0x00, 0x00,
         0x03, 0x00, 0x00, 0x03, 0x00, 0x78, 0xA0, 0x02, 0x80
-    )
-    private val csdPps = byteArrayOf(
+    ).map { it.toByte() }.toByteArray()
+    private val csdPps = intArrayOf(
         0x00, 0x00, 0x00, 0x01, 0x44, 0x01, 0xC0, 0x72, 0xB0, 0x20, 0x10, 0x10, 0x10
-    )
+    ).map { it.toByte() }.toByteArray()
 
     fun setSurface(surfaceTexture: SurfaceTexture?) {
         surface = surfaceTexture?.let { Surface(it) }
@@ -71,7 +71,7 @@ class StreamManager(
     }
 
     private fun initMediaCodec() {
-        val format = MediaFormat.createVideoFormat(MediaFormat.MIME_TYPE_HEVC, 640, 720)
+        val format = MediaFormat.createVideoFormat("video/hevc", 640, 720)
         format.setInteger(MediaFormat.KEY_BIT_RATE, 1000000)
         format.setInteger(MediaFormat.KEY_FRAME_RATE, 30)
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1)
@@ -81,7 +81,7 @@ class StreamManager(
         System.arraycopy(csdPps, 0, csd0, csdSps.size, csdPps.size)
         format.setByteBuffer("csd-0", ByteBuffer.wrap(csd0))
 
-        mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIME_TYPE_HEVC)
+        mediaCodec = MediaCodec.createDecoderByType("video/hevc")
         mediaCodec?.configure(format, surface, null, 0)
         mediaCodec?.start()
     }

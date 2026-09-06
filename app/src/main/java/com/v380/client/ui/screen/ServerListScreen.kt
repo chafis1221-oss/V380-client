@@ -56,8 +56,6 @@ fun ServerListScreen(
                     text = "+ Add",
                     color = V380Colors.text,
                     fontSize = 12.sp,
-                    modifier = Modifier
-                        .let { Text(it) },
                 )
             }
         }
